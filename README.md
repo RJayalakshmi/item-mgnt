@@ -29,17 +29,17 @@ STEP 1: Clone the repository using below command on git base.
 
 	download the repository in zip and extract in your server.
 
-STEP 2: On command promp, move to "public_html" folder and run 		"composer update".
+STEP 2: On command promp, move to "public_html" folder and run "composer update".
 
-STEP 3: Open "public_html/.env" file and update your url and DB credentials.
+STEP 3: Open "public_html/.env" file and update your DB credentials.
 
 STEP 4: Create DB and import sql dump file within the folder 	"sql".
 
      (or)
 
-     On command promp, move to "public_html" folder and run 		"php artisan migrate".
+     On command promp, move to "public_html" folder and run "php artisan migrate".
 
-STEP 5: (optional) run "php artisan db:seed --class=ItemSeeder" 	to load dummy data
+STEP 5: (optional) run "php artisan db:seed --class=ItemSeeder" to load dummy data
 
 STEP 6: Finally, run "php artisan serve" and open the given URL in your browser
 

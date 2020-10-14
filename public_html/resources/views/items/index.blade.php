@@ -68,20 +68,27 @@
         //alert(document.getElementById("displayItemList"));
         var ItemComponent = React.createClass({
             getInitialState: function () {
-                return {left: [], right: [], disableLeft: false, disableRight: false, leftSearch: "", rightSearch: "", disableLeftClear: true, disableRightClear: true};
+                return {left: null, right: null, disableLeft: false, disableRight: false, leftSearch: "", rightSearch: "", disableLeftClear: true, disableRightClear: true};
             },
             componentDidMount : function(){                 
                 $.ajax({
                   url: "{{url('api/get_items')}}",
                   type: "GET"})
                   .done(function(response){  
-                    var left = Object.values(response.LEFT);
-                    var right = Object.values(response.RIGHT);
-                    //console.log(data);
-                    this.setState({
-                        left:left,
-                        right:right
-                    });
+                      if(response.LEFT){
+                            var left = Object.values(response.LEFT);
+                            //console.log(data);
+                            this.setState({
+                                left:left
+                            });
+                      }
+                      if(response.RIGHT){
+                            var right = Object.values(response.RIGHT);
+                            //console.log(data);
+                            this.setState({                                
+                                right:right
+                            });
+                      }
                     //alert(this.state.data)
                 }.bind(this));				
             },
@@ -105,13 +112,29 @@
                       data: {position : postion }
                       })
                       .done(function(response){  
-                          if(response.error == 0){
+                        if(response.error == 0){
+                            if(response.data.LEFT){
                             var left = Object.values(response.data.LEFT);
-                            var right = Object.values(response.data.RIGHT);                            
+                            //console.log(data);
                             this.setState({
-                                left:left,
-                                right:right
+                                left:left
                             });
+                        }else{
+                            this.setState({
+                                left:null
+                            });
+                        }
+                        if(response.data.RIGHT){
+                          var right = Object.values(response.data.RIGHT);
+                          //console.log(data);
+                          this.setState({                                
+                              right:right
+                          });
+                        }else{
+                            this.setState({
+                                right:null
+                            });
+                        }
                            // alert(response.message);
                         }else{
                             alert(response.message);
@@ -135,13 +158,29 @@
                       data: {name : item_name }
                       })
                       .done(function(response){  
-                          if(response.error == 0){
-                            var left = Object.values(response.data.LEFT);
-                            var right = Object.values(response.data.RIGHT);                            
-                            this.setState({
-                                left:left,
-                                right:right
-                            });
+                          if(response.error == 0){                            
+                            if(response.data.LEFT){
+                                var left = Object.values(response.data.LEFT);
+                                //console.log(data);
+                                this.setState({
+                                    left:left
+                                });
+                            }else{
+                                this.setState({
+                                    left:null
+                                });
+                            }
+                            if(response.data.RIGHT){
+                              var right = Object.values(response.data.RIGHT);
+                              //console.log(data);
+                              this.setState({                                
+                                  right:right
+                              });
+                            }else{
+                                this.setState({
+                                    right:null
+                                });
+                            }
                             $('#item').val("");
                             alert(response.message);
                         }else{
@@ -166,12 +205,29 @@
                               data: {id: item_id}})
                               .done(function(response){									      	
                                 if(response.error == 0){
-                                    var left = Object.values(response.data.LEFT);
-                                    var right = Object.values(response.data.RIGHT);                            
-                                    $itemClass.setState({
-                                        left:left,
-                                        right:right
-                                    });
+                                    if(response.data.LEFT){
+                                        var left = Object.values(response.data.LEFT);
+                                        //console.log(data);
+                                        $itemClass.setState({
+                                            left:left
+                                        });
+                                    }else{
+                                        $itemClass.setState({
+                                            left:null
+                                        });
+                                    }
+                                    if(response.data.RIGHT){
+                                      var right = Object.values(response.data.RIGHT);
+                                      //console.log(data);
+                                      $itemClass.setState({                                
+                                          right:right
+                                      });
+                                    } else{
+                                        $itemClass.setState({
+                                            right:null
+                                        });
+                                    }                         
+
                                     $('#item').val("");
                                     $('.list-group-item').removeClass('active');
                                 }else{
@@ -239,7 +295,7 @@
                                                     </div>                                                    
                                                 </div>
                                             </div>
-                                            {(this.state.left )  ?
+                                            {(this.state.left != null)  ?
                                                 <ul className="list-group left-list-group">
                                                 {this.state.left.filter(this.leftFilterFunction).map((item, i) => 
                                                 <li className="list-group-item" id={item.id} onClick={this.selectLeftItem.bind(this, item.id)}>
