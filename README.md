@@ -21,7 +21,9 @@ Laravel Framework : 8.10.0 (https://laravel.com/docs)
 
 ## Installation
 
-STEP 1: Clone the repository using below command.
+STEP 1: Clone the repository using below command on git base.
+	
+	git clone https://github.com/RJayalakshmi/item-mgnt.git
 
 	(or) 
 
@@ -32,8 +34,11 @@ STEP 2: On command promp, move to "public_html" folder and run 		"composer updat
 STEP 3: Open "public_html/.env" file and update your url and DB credentials.
 
 STEP 4: Create DB and import sql dump file within the folder 	"sql".
+
      (or)
+
      On command promp, move to "public_html" folder and run 		"php artisan migrate".
+
 STEP 5: (optional) run "php artisan db:seed --class=ItemSeeder" 	to load dummy data
 
 STEP 6: Finally, run "php artisan serve" and open the given URL in your browser
